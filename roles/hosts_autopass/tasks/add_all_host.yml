@@ -7,11 +7,14 @@
 #  tasks:
   - name: Add "/etc/hosts"
     blockinfile:
-      path: /etc/hosts
-      block: |
-        10.0.0.13 hmaster
-        10.0.0.7 hworker-1
-        10.0.0.9 hworker-2
+#      path: /etc/hosts
+#      block: |
+#        10.0.0.13 hmaster
+#        10.0.0.7 hworker-1
+#        10.0.0.9 hworker-2
+      dest: /etc/hosts
+      content: "{{ lookup('template', 'templates/hosts.j2') }}"
+      state: present        
     become: yes
 
   - name: copy pem key to host
