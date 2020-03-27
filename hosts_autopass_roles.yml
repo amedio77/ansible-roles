@@ -1,0 +1,7 @@
+---
+- name: Install host_autopass on the all
+  hosts: all
+  become: yes
+
+  roles:
+    - role: ./roles/hosts_autopass
