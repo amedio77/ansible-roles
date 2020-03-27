@@ -8,20 +8,15 @@
   
 #  tasks:
   - name: Add "/etc/hosts"
-#    set_fact:
-#      hosts_content: "{{ lookup('template', 'templates/hosts.j2') }}"
     blockinfile: 
-#      path: /etc/hosts
-#      block: |
-#        10.0.0.13 hmaster
-#        10.0.0.7 hworker-1
-#        10.0.0.9 hworker-2
-      dest: /etc/hosts
-      content: "{{ lookup('template', 'templates/hosts.j2') }}"
-      state: present
+      path: /etc/hosts
+      block: |
+        10.0.0.13 hmaster
+        10.0.0.7 hworker-1
+        10.0.0.9 hworker-2
     become: yes    
-
-
+ 
+       
   - name: Add "/etc/ansible/hosts"
     blockinfile: 
       path: /etc/ansible/hosts
