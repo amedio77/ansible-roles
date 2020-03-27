@@ -26,10 +26,13 @@
     blockinfile: 
       path: /etc/ansible/hosts
       create: yes
-      block: |
-        [masters]
-        hmaster    
-        [workers]
-        hworker-1
-        hworker-2
+#      block: |
+#        [masters]
+#        hmaster    
+#        [workers]
+#        hworker-1
+#        hworker-2
+      dest: /etc/hosts
+      content: "{{ lookup('template', 'templates/ansible-hosts.j2') }}"
+      state: present
     become: yes   
