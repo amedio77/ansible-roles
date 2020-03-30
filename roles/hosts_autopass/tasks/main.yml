@@ -6,4 +6,4 @@
 
 - include: add_authorized_keys.yml
 
-#- include: add_all_host.yml
+- include: add_all_host.yml
