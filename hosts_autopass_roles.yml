@@ -18,7 +18,7 @@
     - { role: ./roles/hosts_autopass, tags: [local_all] }
 
 - name: Install host_autopass on the all
-  hosts: worker
+  hosts: all
   serial: 1
   gather_facts: no
   become: yes
