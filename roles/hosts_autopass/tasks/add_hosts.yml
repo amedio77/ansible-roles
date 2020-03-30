@@ -1,38 +1,17 @@
----
-#- hosts: localhost
-#  connection: local
-#  serial: 1 
-#  gather_facts: no
-#  become: yes
-#  become_method: sudo
   
-#  tasks:
   - name: Add "/etc/hosts"
-#    set_fact:
-#      hosts_content: "{{ lookup('template', 'templates/hosts.j2') }}"
     blockinfile: 
-#      path: /etc/hosts
-#      block: |
-#        10.0.0.13 hmaster
-#        10.0.0.7 hworker-1
-#        10.0.0.9 hworker-2
       dest: /etc/hosts
       content: "{{ lookup('template', '~/ansible-roles/roles/hosts_autopass/templates/hosts.j2') }}"
       state: present
     become: yes    
-
+    tags: local,all
 
   - name: Add "/etc/ansible/hosts"
     blockinfile: 
-#      path: /etc/ansible/hosts
       create: yes
-#      block: |
-#        [masters]
-#        hmaster    
-#        [workers]
-#        hworker-1
-#        hworker-2
       dest: /etc/ansible/hosts
       content: "{{ lookup('template', '~/ansible-roles/roles/hosts_autopass/templates/ansible-hosts.j2') }}"
       state: present
-    become: yes   
+    become: yes
+    tags: local,all   

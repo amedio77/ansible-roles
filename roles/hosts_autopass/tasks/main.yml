@@ -1,7 +1,9 @@
 ---
 
+- include: add_hosts.yml
+
 - include: add_known_hosts.yml
 
-#- include: add_authorized_keys.yml
+- include: add_authorized_keys.yml
 
 #- include: add_all_host.yml
