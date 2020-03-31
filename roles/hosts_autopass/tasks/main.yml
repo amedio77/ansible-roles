@@ -1,12 +1,18 @@
 ---
+  - include_tasks:
+      file: add_known_hosts.yml
+      apply:
+        tags:
+          - master
 
-#  - include_tasks: add_hosts.yml
+  - include_tasks: 
+      file: add_authorized_keys.yml
+      apply:
+        tags: 
+          - master
 
-  - include_tasks: add_known_hosts.yml
-    tags: local    
-
-  - include_tasks: add_authorized_keys.yml
-    tags: local
-
-  - include_tasks: add_all_host.yml
-    tags: workers
+  - include_tasks: 
+      file: add_all_host.yml
+      apply:
+        tags: 
+          - workers

@@ -3,7 +3,7 @@
   hosts: localhost
   connection: local
   serial: 1
-  gather_facts: no
+#  gather_facts: no
 
   pre_tasks:
     - include_tasks: ./roles/hosts_autopass/tasks/add_hosts.yml
@@ -12,16 +12,18 @@
   hosts: all
   connection: local
   serial: 1
-  gather_facts: no
+#  gather_facts: no
 
   roles:
-    - { role: ./roles/hosts_autopass, tags: ['local'] }
+    - { role: ./roles/hosts_autopass, tags: master }
 
 - name: Install host_autopass on the all
   hosts: all
   serial: 1
-  gather_facts: no
+#  gather_facts: no
   become: yes
 
   roles:
-    - { role: ./roles/hosts_autopass, tags: ['workers'] }
+    - { role: ./roles/hosts_autopass, tags: workers }
+
+
