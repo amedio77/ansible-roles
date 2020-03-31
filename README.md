@@ -20,6 +20,9 @@ $ vi roles/hosts_autopass/templates/hosts.j2
 
 
 # ansible role 실행
-ansible-playbook --private-key ~/.ssh/kepri-msa.pem hosts_autopass_roles.yml
+
+ansible-playbook --private-key ~/.ssh/kepri-msa.pem  hosts_autopass_roles.yml --skip-tags workers
+
+ansible-playbook --private-key ~/.ssh/kepri-msa.pem  hosts_autopass_roles.yml --skip-tags local
 
 ```
