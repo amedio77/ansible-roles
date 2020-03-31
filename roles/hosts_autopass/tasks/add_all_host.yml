@@ -1,36 +1,31 @@
-#  - name: Add "/etc/hosts"
-#    blockinfile:
-#      dest: /etc/hosts
-#      content: "{{ lookup('template', 'templates/hosts.j2') }}"
-#      state: present        
-#    become: yes
-#    tags: local_all
+  - name: all  add "/etc/hosts"
+    blockinfile:
+      dest: /etc/hosts
+      content: "{{ lookup('template', 'templates/hosts.j2') }}"
+      state: present        
+    become: yes
 
-  - name: copy pem key to host
+  - name: all copy pem key to host
     template: src=~/.ssh/kepri-msa.pem dest=~/.ssh/ mode=600
     become: no
-    tags: all
     
-  - name: Generate ~/.ssh/id_rsa RSA host key
+  - name: all Generate ~/.ssh/id_rsa RSA host key
     command : ssh-keygen -q -t rsa -f ~/.ssh/id_rsa -C "" -N ""
     args:
       creates: ~/.ssh/id_rsa
     ignore_errors: yes  
     become: no
-    tags: all
 
-  - name: add known_hosts
+  - name: all add known_hosts
     shell: /usr/bin/ssh-keyscan -t ecdsa {{ item }} >> ~/.ssh/known_hosts 
     with_items: '{{ groups.all }}'
     become: no
-    tags: all
 
-  - name: Generate authorized_keys
+  - name: all  Generate authorized_keys
     remote_user: centos
     shell : cat ~/.ssh/id_rsa.pub |  ssh -i "~/.ssh/kepri-msa.pem" centos@{{ item }} "cat -  >> ~/.ssh/authorized_keys" 
     with_items: '{{ groups.all }}'
     ignore_errors: yes
     become: no
-    tags: all
 
 

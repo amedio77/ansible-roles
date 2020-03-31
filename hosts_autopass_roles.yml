@@ -1,21 +1,21 @@
 ---
-- name: Install host_autopass on the local_all
+- name: pre tesk add_hosts
   hosts: localhost
   connection: local
   serial: 1
   gather_facts: no
 
-  roles:
-    - { role: ./roles/hosts_autopass, tags: [local] }
+  pre_tasks:
+    - include_tasks: ./roles/hosts_autopass/tasks/add_hosts.yml
 
-- name: Install host_autopass on the local_all
+- name: Install host_autopass on the local
   hosts: all
   connection: local
   serial: 1
   gather_facts: no
 
   roles:
-    - { role: ./roles/hosts_autopass, tags: [local_all] }
+    - { role: ./roles/hosts_autopass, tags: ['local'] }
 
 - name: Install host_autopass on the all
   hosts: all
@@ -24,4 +24,4 @@
   become: yes
 
   roles:
-    - { role: ./roles/hosts_autopass, tags: [all] }
+    - { role: ./roles/hosts_autopass, tags: ['workers'] }

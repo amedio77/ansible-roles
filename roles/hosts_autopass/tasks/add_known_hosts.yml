@@ -7,5 +7,4 @@
       line={{ item }} 
     with_items:
       - "{{ keyscan.stdout_lines }}"
-    tags: local_all
 

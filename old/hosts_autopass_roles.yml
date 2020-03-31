@@ -1,0 +1,27 @@
+---
+- name: Install host_autopass on the local_all
+  hosts: localhost
+  connection: local
+  serial: 1
+  gather_facts: no
+
+  roles:
+    - { role: ./roles/hosts_autopass, tags: [local] }
+
+- name: Install host_autopass on the local_all
+  hosts: all
+  connection: local
+  serial: 1
+  gather_facts: no
+
+  roles:
+    - { role: ./roles/hosts_autopass, tags: [local_all] }
+
+- name: Install host_autopass on the all
+  hosts: all
+  serial: 1
+  gather_facts: no
+  become: yes
+
+  roles:
+    - { role: ./roles/hosts_autopass, tags: [all] }
