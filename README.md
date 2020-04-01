@@ -27,4 +27,6 @@ ansible-playbook --private-key ~/.ssh/kepri-msa.pem  hosts_autopass_roles.yml -t
 
 ansible-playbook --private-key ~/.ssh/kepri-msa.pem  hosts_autopass_roles.yml -t workers --skip-tags master
 
+ansible-playbook hadoop_roles.yml
+
 ```

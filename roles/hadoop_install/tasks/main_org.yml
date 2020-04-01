@@ -14,7 +14,11 @@
   - name: install openjdk 1.8.0
     yum: name=java-1.8.0-openjdk state=present
 
-  - name: Set JAVA Home
+#- name: Install hadoop
+#  hosts: all
+
+#  tasks:
+  - name: Insert a line at the end of a file.
     blockinfile:
       path: /home/centos/.bashrc
       block: |
@@ -27,33 +31,22 @@
         export HADOOP_YARN_HOME=$HADOOP_HOME
         export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
         export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
-
   - name: source ~/.bashrc
     shell: . /home/centos/.bashrc
 
-  - name: check if hadoop is already downloaded
+  - name: check if hadoop is already downloaded 
     command: /usr/bin/test -e ~/hadoop-3.2.1.tar.gz
     ignore_errors: True
     register: hadoop_exists
 
   - name: download hadoop 3.2.1
     get_url:
-       url=http://apache.claz.org/hadoop/common/hadoop-3.2.1/hadoop-3.2.1.tar.gz dest=/home/centos
+       url=http://apache.claz.org/hadoop/common/hadoop-3.2.1/hadoop-3.2.1.tar.gz dest=/home/centos 
     when: hadoop_exists.rc != 0
-
-  - name: ansible remove link ~/hadoop
-    file:
-      path: ~/hadoop
-      state: absent
-
-  - name: ansible remove directory ~/hadoop-3.2.1
-    file:
-      path: ~/hadoop-3.2.1
-      state: absent
-
+ 
   - name: check hadoop directory existence
     stat: path=~/hadoop-3.2.1
-    register: hadoop_dir
+    register: hadoop_dir  
 
   - name: extract hadoop
     unarchive: src=~/hadoop-3.2.1.tar.gz dest=~ copy=no
@@ -74,13 +67,12 @@
   - name: hadoop conf yarn-site
     template: src=yarn-site.xml dest=~/hadoop/etc/hadoop
 
-#  - name: workers
-#    template: src=workers dest=~/hadoop/etc/hadoop
+  - name: workers
+    template: src=workers dest=~/hadoop/etc/hadoop
 
   - name: Insert workers file.
     blockinfile:
       path: ~/hadoop/etc/hadoop/workers
-      create: yes
       block: |
         hworker-1
         hworker-2
@@ -109,5 +101,3 @@
 #  - name: hadoop service config
 #    copy: src=hadoop dest=/etc/init.d/hadoop mode=0777
 
-  - name: hadoop start all
-    command: " ~/hadoop/sbin/start-all.sh "
